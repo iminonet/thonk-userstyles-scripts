@@ -1,0 +1,427 @@
+/* ==UserStyle==
+@name           Back to V3 1.0
+@namespace      github.com/openstyles/stylus
+@version        1.0.0
+@description   	Restores the old look from V3 1.0 to Current V3.
+@author         thonkbot
+@preprocessor	stylus
+@var checkbox sharebtn-check "Enable share button" 1
+@var checkbox related-check "Enable related arrow navigation [requires startube]" 0
+==/UserStyle== */
+
+@-moz-document domain("youtube.com") {
+	$sharebtn-plus =	url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAlSURBVChTY8ACUqAYBTBBaYKA+goZgRjDPdgA0SZiA4PL1wwMAAp8AgQuaqv2AAAAAElFTkSuQmCC')
+	$sharebtn-arrow = url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAALCAYAAACtWacbAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACESURBVChThY4xCgMhEEVnbfQceg2bnCzmZgH1Ftrb2Wo165c1EELcB18/44ORYow88qQNwhiD2+1EoZSiO1HguBMFMxMipSStNboLIXyJR62Vrz5prVHOGfVhrX2jzHWL3vsSXksAHwlCSgkVgpvDiynthEkphcdHkd/HhfeeR/4LRHQCzqJO/BKksyMAAAAASUVORK5CYII=')
+	$sharebtn-pos = 84px
+    $dogfood-icon = url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAAD3SURBVChTY2CgBrh69SpjVVVVeGdn5+ENGzaY4jXz8uXLXBkZGa9DQ0P/T5w4cSGQz4hVw7Fjx5h6enoi4+LiPoAUp6en/507d245huIbN24oTJo0aWNsbOy/sLCw/1FRUb9BGoDOWcBQV1fHtXTp0oxTp07pT5s2La+0tPQ9SFFWVtbn9vb28nnz5pmXl5cXFRQU8DLk5OQsB0lmZ2f/iIiI+B8dHf2/q6tr9/nz59UwrE1LS6sBKvoHsiohIeHT5MmTkx48eMCC1TPz589nys/P3whSXF9f/+DNmzfYFcJ0A51iBbThNNBd4UTF0YEDB7CHI5JuADTVdRLj86AbAAAAAElFTkSuQmCC')
+    $dogfood-icon-hovi = url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAACVSURBVChTY2CgBvj//z8jEIcD8WEgNsVrJlABFxC/BmIQWAjSjFUDUIIJiCOB+ANU8V8gXY6hGCioAMQbgfgfVOFvKL2AAWpdBpDWB+I8IH4PlfwMMg2IzYG4CIh5QYqXQyV/QGkQtRuI1bBZW4Nk5ScgOwmIWfB5BuRGEHiAUyFMN1CBFRCfBuJwouIIqBB7OCLpBgDzesPGQVi45QAAAABJRU5ErkJggg==')
+    @keyframes tooltip-anim {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    related-arrow(a) {
+        if a == back {
+            background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vflrAFsIP.png) -339px -99px;
+            background-size: auto;
+            width: 8px;
+            height: 12px;
+        }
+        if a == foward {
+            background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vflrAFsIP.png) -116px -270px;
+            background-size: auto;
+            width: 8px;
+            height: 12px;
+        }
+    }
+    yt-tooltip(posx,posy,ttext) {
+        &:before {
+            content: \'ttext\';
+            position: absolute;
+            padding: 6px;
+            color: #fff;
+            background: #000;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 2px;
+            top: posy;
+            right: posx;
+            z-index: 10000;
+            pointer-events: none;
+            animation: tooltip-anim 0.3s;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .25);
+        }
+    }
+    yt-tooltip-arrow(posx,posy) {
+        &:after {
+            content: '';
+            position: absolute;
+            top: posy;
+            right: posx;
+            width: 0;
+            height: 0;
+            vertical-align: top;
+            border: 1px solid transparent;
+            border-width: 5px 5px 0 5px;
+            border-top-color: #000;
+            z-index: 10000;
+            animation: tooltip-anim 0.3s;
+        }
+    }
+    yt-button() {
+        &:hover {
+            border-color: #c6c6c6;
+            background: #f0f0f0;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.10);
+        }
+        &:active {
+            border-color: #c6c6c6;
+            background: #e9e9e9;
+            box-shadow: inset 0 1px 0 #ddd;
+        }
+    }
+    /* Share Button */
+    if sharebtn-check {
+        #yt-masthead-user {
+            &:before {
+                content: "Share";
+                position: absolute;
+                background: 10px 8px / 10px no-repeat $sharebtn-plus, -webkit-linear-gradient(top, #f8f8f8, #ececec);
+                border-radius: 2px;
+                border: 1px solid #c6c6c6;
+                right: $sharebtn-pos;
+                z-index: 1000;
+                padding: 0 10px;
+                height: 27px;
+                line-height: 27px;
+                padding-left: 28px;
+                cursor: pointer;
+                color: #666;
+            }
+            &:after {
+                content: '';
+                width: 9px;
+                height: 11px;
+                background: $sharebtn-arrow;
+                position: absolute;
+                top: 19.3px;
+                right: $sharebtn-pos - 8px;
+                z-index: 1000;
+                cursor: pointer;
+            }
+            .yt-masthead-user-icon {
+                margin-left: $sharebtn-pos + 6px;
+            }
+            #yt-masthead-dropdown {
+                display: none;
+            }
+        }
+        .sb-card {
+            right: $sharebtn-pos + 35px !important;
+        }
+    }
+    /* Appbar Tweaks */
+	#masthead-appbar-container {
+		#appbar-settings-button {
+			box-shadow: unset;
+			border: unset;
+			background-color: unset;
+			margin-left: 5px;
+			&:hover {
+				.yt-uix-button-icon-wrapper {
+					opacity: unset;
+				}
+			}
+			.yt-uix-button-icon-wrapper {
+				opacity: .6;
+			}
+			.yt-uix-button-arrow {
+				display: inline-block;
+                margin-bottom: -3px;
+				margin-left: 5px;
+			}
+		}
+		#appbar-guide-button {
+			box-shadow: unset;
+			border: unset;
+			background-color: unset;
+			.yt-uix-button-content:before {
+				content: 'Guide';
+				color: #666;
+				font-size: 13px;
+				font-weight: 400;
+				margin-left: 7px;
+			}
+		}
+	}
+	#appbar-settings-menu {
+		box-shadow: 2px 2px 2px rgba(0, 0, 0, .15);
+        & > :last-child {
+            .upload-menu-account-settings-icon {
+                background: $dogfood-icon;
+            }
+            &:hover {
+                .upload-menu-account-settings-icon {
+                    background: $dogfood-icon-hovi;
+                }
+            }
+        }
+	}
+    #appbar-guide-menu {
+        left: -230px;
+    }
+    .show-guide #appbar-guide-menu {
+        left: 0;
+        transition: all .05s;
+    }
+    .appbar-guide-menu-visibility {
+        opacity: 1;
+        transition: all .06s;
+    }
+    /* Watch Page Tweaks */
+	.subscribe-label {
+		font-size: 11px;
+		font-weight: 650;
+	}
+	.yt-uix-button-subscribe-branded .yt-uix-button-icon-subscribe {
+		height: 13px;
+	}
+    .checkbox-on-off {
+        & > label {
+            margin-right: 23px;
+        }
+        .autoplay-hovercard {
+            position: relative;
+            &:before {
+                content: '';
+                position: absolute;
+                cursor: pointer;
+                margin-left: -20px;
+                margin-right: 4px;
+                margin-top: -9px;
+                opacity: .7;
+                background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfldzd94_.png) -204px -275px;
+                background-size: auto;
+                width: 16px;
+                height: 16px;
+            }
+            &:after {
+                content: "When autoplay is enabled, a suggested video will automatically play next.";
+                background: #fff;
+                border: 1px solid #c5c5c5;
+                box-shadow: 0 0 15px rgba(0, 0, 0, .18);
+                padding: 20px;
+                width: 235px;
+                line-height: 1.2em;
+                position: absolute;
+                z-index: 1000;
+                font-weight: 400;
+                font-size: 13px;
+                margin-top: 23px;
+                right: -7px;
+                opacity: 0;
+                transition: opacity 0.2s ease-out;
+                pointer-events: none;
+            }
+            &:hover {
+                &:after {
+                    opacity: 1;
+                }
+                & + span {
+                    &:before, &:after {
+                        opacity: 1;
+                    }
+                }
+            }
+            & + span {
+                overflow: visible;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    z-index: 1000;
+                    color: black;
+                    width: 0;
+                    height: 0;
+                    border-bottom-width: 12px;
+                    border-top-color: transparent;
+                    border: 12px solid transparent;
+                    border-bottom-color: #c5c5c5;
+                    margin-top: -8px;
+                    right: 41px;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: opacity 0.2s ease-out;
+                }
+                &:before {
+                    content: '';
+                    position: absolute;
+                    z-index: 1001;
+                    color: black;
+                    width: 0;
+                    height: 0;
+                    border-bottom-width: 12px;
+                    border-top-color: transparent;
+                    border: 12px solid transparent;
+                    border-bottom-color: #fff;
+                    margin-top: 10px;
+                    right: 41px;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: opacity 0.2s ease-out;
+                }
+            }
+        }
+    }
+    /* V3 1.0 Related Arrows (Startube Only) */
+    if related-check {
+        #watch7-sidebar {
+            &:hover {
+                #related-tabs {
+                    display: block;
+                }
+            }
+            &:not([state="related"]) {
+                .watch-sidebar-section {
+                    &:nth-child(3) {
+                        display: block !important;
+                        .watch-sidebar-body {
+                            display: none;
+                        }
+                    }
+                }
+            }
+            .watch-sidebar-section {
+                &:nth-child(2) {
+                    display: block !important;
+                }
+            }
+            #related-tabs {
+                display: none;
+                margin: 0;
+                z-index: 1000;
+                &:has(#related-related:hover) {
+                    yt-tooltip(26px,91px,Related)
+                    yt-tooltip-arrow(45px,113px)
+                }
+                &:has(#related-channel-about:hover) {
+                    yt-tooltip(0px,91px,About channel)
+                    yt-tooltip-arrow(10px,113px)
+                }
+                &:has(#related-channel-videos:hover) {
+                    yt-tooltip(0px,91px,Channel videos)
+                    yt-tooltip-arrow(10px,113px)
+                }
+                &:has(#related-channel-about[active]):has(#related-channel-videos:hover) {
+                    yt-tooltip(10px,91px,Channel videos)
+                    yt-tooltip-arrow(45px,113px)
+                }
+                .related-channel {
+                    display: none;
+                }
+                .tab-flex {
+                    overflow-x: visible;
+                    position: absolute;
+                    top: 120px;
+                    border-bottom: 0;
+                    right: 0;
+                    background: white;
+                    &:has(#related-channel-about[active]) {
+                        #related-channel-videos {
+                            &:before {
+                                content: '';
+                                position: absolute;
+                                related-arrow(back);
+                                left: 40%;
+                                top: 26%;
+                            }
+                        }
+                        #related-related {
+                            display: none !important;
+                        }
+                    }
+                    .related-tab {
+                        overflow-x: visible;
+                        opacity: 1;
+                        border-color: #d3d3d3 !important;
+                        background: #f8f8f8;
+                        color: #333;
+                        border: solid 1px transparent;
+                        border-radius: 2px;
+                        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+                        width: 13px;
+                        height: 23px !important;
+                        margin-left: 5px;
+                        padding: 0 8px;
+                        position: relative;
+                        .related-tab-inner {
+                            display: none;
+                        }
+                         &:hover {
+                             .related-tab-inner {
+                                 opacity: 1;
+                             }
+                         }
+                         &:first-child {
+                            &[active] {
+                                opacity: .5 !important;
+                                cursor: auto;
+                            }
+                            &:before {
+                                content: '';
+                                position: absolute;
+                                related-arrow(back);
+                                left: 40%
+                            }
+                            &:not([active]) {
+                                yt-button()
+                            }
+                            margin-left: 0;
+                         }
+                         &:nth-child(2) {
+                            yt-button()
+                            &:before {
+                                content: '';
+                                position: absolute;
+                                related-arrow(foward);
+                                left: 40%;
+                                top: 26%;
+                            }
+                            &[active] {
+                                display: none !important;
+                                & + div {
+                                    display: block !important;
+                                    yt-button()
+                                    &:before {
+                                        content: '';
+                                        position: absolute;
+                                        related-arrow(foward);
+                                        left: 40%;
+                                        top: 26%;
+                                    }
+                                }
+                            }
+                         }
+                         &:nth-child(3) {
+                            display: none !important;
+                            &[active] {
+                                display: block !important;
+                                opacity: .5 !important;
+                                cursor: auto;
+                                &:before {
+                                    content: '';
+                                    position: absolute;
+                                    related-arrow(foward);
+                                    left: 40%;
+                                    top: 26%;
+                                }
+                            }
+                         }
+                    }
+                }
+            }
+        }
+    }
+}
