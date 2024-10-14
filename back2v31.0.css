@@ -7,15 +7,21 @@
 @preprocessor	stylus
 @var checkbox sharebtn-check "Enable share button" 1
 @var checkbox related-check "Enable related arrow navigation [requires startube]" 0
+@var checkbox autoplaytutrial-check "Enable autoplay info" 1
+@var checkbox autoplaytutrialarrow-check "Enable autoplay info arrow" 1
+@var checkbox guideanimation-check	"Enable guide slide animations" 1
+@var text guideanim-sec "Guide slide animation speed" .05s
 ==/UserStyle== */
 
 @-moz-document domain("youtube.com") {
-	$sharebtn-plus =	url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAlSURBVChTY8ACUqAYBTBBaYKA+goZgRjDPdgA0SZiA4PL1wwMAAp8AgQuaqv2AAAAAElFTkSuQmCC')
+	/* variables */
+	$sharebtn-plus = url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAlSURBVChTY8ACUqAYBTBBaYKA+goZgRjDPdgA0SZiA4PL1wwMAAp8AgQuaqv2AAAAAElFTkSuQmCC')
 	$sharebtn-arrow = url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAALCAYAAACtWacbAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACESURBVChThY4xCgMhEEVnbfQceg2bnCzmZgH1Ftrb2Wo165c1EELcB18/44ORYow88qQNwhiD2+1EoZSiO1HguBMFMxMipSStNboLIXyJR62Vrz5prVHOGfVhrX2jzHWL3vsSXksAHwlCSgkVgpvDiynthEkphcdHkd/HhfeeR/4LRHQCzqJO/BKksyMAAAAASUVORK5CYII=')
 	$sharebtn-pos = 84px
     $dogfood-icon = url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAAD3SURBVChTY2CgBrh69SpjVVVVeGdn5+ENGzaY4jXz8uXLXBkZGa9DQ0P/T5w4cSGQz4hVw7Fjx5h6enoi4+LiPoAUp6en/507d245huIbN24oTJo0aWNsbOy/sLCw/1FRUb9BGoDOWcBQV1fHtXTp0oxTp07pT5s2La+0tPQ9SFFWVtbn9vb28nnz5pmXl5cXFRQU8DLk5OQsB0lmZ2f/iIiI+B8dHf2/q6tr9/nz59UwrE1LS6sBKvoHsiohIeHT5MmTkx48eMCC1TPz589nys/P3whSXF9f/+DNmzfYFcJ0A51iBbThNNBd4UTF0YEDB7CHI5JuADTVdRLj86AbAAAAAElFTkSuQmCC')
     $dogfood-icon-hovi = url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjUuNUmK/OAAAACVSURBVChTY2CgBvj//z8jEIcD8WEgNsVrJlABFxC/BmIQWAjSjFUDUIIJiCOB+ANU8V8gXY6hGCioAMQbgfgfVOFvKL2AAWpdBpDWB+I8IH4PlfwMMg2IzYG4CIh5QYqXQyV/QGkQtRuI1bBZW4Nk5ScgOwmIWfB5BuRGEHiAUyFMN1CBFRCfBuJwouIIqBB7OCLpBgDzesPGQVi45QAAAABJRU5ErkJggg==')
-    @keyframes tooltip-anim {
+	/* animations */
+	@keyframes tooltip-anim {
         0% {
             opacity: 0;
         }
@@ -23,6 +29,7 @@
             opacity: 1;
         }
     }
+	/* functions/mixins */
     related-arrow(a) {
         if a == back {
             background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vflrAFsIP.png) -339px -99px;
@@ -83,6 +90,8 @@
             box-shadow: inset 0 1px 0 #ddd;
         }
     }
+	
+	/* main CSS: */
     /* Share Button */
     if sharebtn-check {
         #yt-masthead-user {
@@ -170,17 +179,19 @@
             }
         }
 	}
-    #appbar-guide-menu {
-        left: -230px;
-    }
-    .show-guide #appbar-guide-menu {
-        left: 0;
-        transition: all .05s;
-    }
-    .appbar-guide-menu-visibility {
-        opacity: 1;
-        transition: all .06s;
-    }
+	if guideanimation-check {
+		#appbar-guide-menu {
+			left: -230px;
+		}
+		.show-guide #appbar-guide-menu {
+			left: 0;
+			transition: all guideanim-sec + .05;
+		}
+		.appbar-guide-menu-visibility {
+			opacity: 1;
+			transition: all guideanim-sec + .01;
+		}
+	}
     /* Watch Page Tweaks */
 	.subscribe-label {
 		font-size: 11px;
@@ -189,92 +200,98 @@
 	.yt-uix-button-subscribe-branded .yt-uix-button-icon-subscribe {
 		height: 13px;
 	}
-    .checkbox-on-off {
-        & > label {
-            margin-right: 23px;
-        }
-        .autoplay-hovercard {
-            position: relative;
-            &:before {
-                content: '';
-                position: absolute;
-                cursor: pointer;
-                margin-left: -20px;
-                margin-right: 4px;
-                margin-top: -9px;
-                opacity: .7;
-                background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfldzd94_.png) -204px -275px;
-                background-size: auto;
-                width: 16px;
-                height: 16px;
-            }
-            &:after {
-                content: "When autoplay is enabled, a suggested video will automatically play next.";
-                background: #fff;
-                border: 1px solid #c5c5c5;
-                box-shadow: 0 0 15px rgba(0, 0, 0, .18);
-                padding: 20px;
-                width: 235px;
-                line-height: 1.2em;
-                position: absolute;
-                z-index: 1000;
-                font-weight: 400;
-                font-size: 13px;
-                margin-top: 23px;
-                right: -7px;
-                opacity: 0;
-                transition: opacity 0.2s ease-out;
-                pointer-events: none;
-            }
-            &:hover {
-                &:after {
-                    opacity: 1;
-                }
-                & + span {
-                    &:before, &:after {
-                        opacity: 1;
-                    }
-                }
-            }
-            & + span {
-                overflow: visible;
-                &:after {
-                    content: '';
-                    position: absolute;
-                    z-index: 1000;
-                    color: black;
-                    width: 0;
-                    height: 0;
-                    border-bottom-width: 12px;
-                    border-top-color: transparent;
-                    border: 12px solid transparent;
-                    border-bottom-color: #c5c5c5;
-                    margin-top: -8px;
-                    right: 41px;
-                    pointer-events: none;
-                    opacity: 0;
-                    transition: opacity 0.2s ease-out;
-                }
-                &:before {
-                    content: '';
-                    position: absolute;
-                    z-index: 1001;
-                    color: black;
-                    width: 0;
-                    height: 0;
-                    border-bottom-width: 12px;
-                    border-top-color: transparent;
-                    border: 12px solid transparent;
-                    border-bottom-color: #fff;
-                    margin-top: 10px;
-                    right: 41px;
-                    pointer-events: none;
-                    opacity: 0;
-                    transition: opacity 0.2s ease-out;
-                }
-            }
-        }
-    }
+	if autoplaytutrial-check {
+		.checkbox-on-off {
+			& > label {
+				margin-right: 23px;
+			}
+			.autoplay-hovercard {
+				position: relative;
+				&:before {
+					content: '';
+					position: absolute;
+					cursor: pointer;
+					margin-left: -20px;
+					margin-right: 4px;
+					margin-top: -9px;
+					opacity: .7;
+					background: no-repeat url(//s.ytimg.com/yts/imgbin/www-hitchhiker-vfldzd94_.png) -204px -275px;
+					background-size: auto;
+					width: 16px;
+					height: 16px;
+				}
+				&:after {
+					content: "When autoplay is enabled, a suggested video will automatically play next.";
+					background: #fff;
+					border: 1px solid #c5c5c5;
+					box-shadow: 0 0 15px rgba(0, 0, 0, .18);
+					padding: 20px;
+					width: 235px;
+					line-height: 1.2em;
+					position: absolute;
+					z-index: 1000;
+					font-weight: 400;
+					font-size: 13px;
+					margin-top: 23px;
+					right: -7px;
+					opacity: 0;
+					transition: opacity 0.2s ease-out;
+					pointer-events: none;
+				}
+				&:hover {
+					&:after {
+						opacity: 1;
+					}
+					if autoplaytutrialarrow-check {
+						& + span {
+							&:before, &:after {
+								opacity: 1;
+							}
+						}
+					}
+				}
+				if autoplaytutrialarrow-check {
+					& + span {
+						overflow: visible;
+						&:after {
+							content: '';
+							position: absolute;
+							z-index: 1000;
+							color: black;
+							width: 0;
+							height: 0;
+							border-bottom-width: 12px;
+							border-top-color: transparent;
+							border: 12px solid transparent;
+							border-bottom-color: #c5c5c5;
+							margin-top: -8px;
+							right: 41px;
+							pointer-events: none;
+							opacity: 0;
+							transition: opacity 0.2s ease-out;
+						}
+						&:before {
+							content: '';
+							position: absolute;
+							z-index: 1001;
+							color: black;
+							width: 0;
+							height: 0;
+							border-bottom-width: 12px;
+							border-top-color: transparent;
+							border: 12px solid transparent;
+							border-bottom-color: #fff;
+							margin-top: 10px;
+							right: 41px;
+							pointer-events: none;
+							opacity: 0;
+							transition: opacity 0.2s ease-out;
+						}
+					}
+				}
+			}
+		}
+	}
     /* V3 1.0 Related Arrows (Startube Only) */
     if related-check {
         #watch7-sidebar {
