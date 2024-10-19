@@ -1,0 +1,14 @@
+/* ==UserStyle==
+@name           YouTube Dogfood logo for V3
+@namespace      github.com/openstyles/stylus
+@version        1.0.0
+@description    puts dogfood logo into v3
+@author         thonkbot
+==/UserStyle== */
+
+@-moz-document domain("youtube.com") {
+    #yt-masthead #logo {
+        background: no-repeat url(//s.ytimg.com/yts/img/yt_dogfood_logo-vflReFaPt.png);
+        background-size: 100%;
+    }
+}
