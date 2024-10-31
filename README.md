@@ -1,4 +1,4 @@
-# thonk's userstyles
+# thonk's userstyles & scripts
 
 Descriptions:
 
