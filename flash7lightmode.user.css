@@ -1,7 +1,7 @@
 /* ==UserStyle==
-@name           Flash7 Light Mode [BETA]
+@name           Flash7 Light Mode
 @namespace      github.com/openstyles/stylus
-@version        0.0.1
+@version        1.0.0
 @description    Light mode for Flash7
 @author         imino
 @preprocessor   stylus
@@ -23,6 +23,28 @@
             color: white;
         }
     }
+    .html5-storyboard-lens {
+        background: #101010;
+        border-radius: 5px;
+        border: 1px solid #454545;
+        &:before {
+            content: '';
+            left: 7px;
+            top: 6px;
+            width: 90%;
+            height: 73%;
+            background: #000;
+            position: absolute;
+            border-radius: 2px;
+        }
+        .html5-storyboard-lens-thumbnail {
+            transform: scale(90%);
+            border-radius: 0px;
+        }
+        .html5-storyboard-lens-timestamp {
+            margin-top: -1px;
+        }
+    }
     .ytp-progress-tooltip {
         background: #101010;
         border-radius: 5px;
@@ -38,7 +60,8 @@
         }
         .ytp-progress-tooltip-thumbnail-container {
             transform: scale(100%) translateY(-15px);
-            background: #252525 !important;
+            background: #000 !important;
+            border-radius: 2px;
         }
         .ytp-progress-tooltip-arrow {
             visibility: hidden;
@@ -68,6 +91,8 @@
         .ytp-volume-panel {
             margin-top: 0px;
             border-left: 1px solid white;
+            position: relative;    
+            transition: width .1s ease-out .1s, margin-right .1s ease-out .1s;
             .ytp-volume-slider-foreground {
                 border-radius: 2px;
 				border: 1px solid #585858;
@@ -82,18 +107,8 @@
 			}
         }
 		.ytp-volume-control-hover .ytp-volume-panel {
-			border-right: 1px solid #fff !important;
 			margin-right: 5px;
             position: relative;
-            &:after {
-                content: '';
-                position: absolute;
-                right: 0px;
-                top: 0;
-                width: 1px;
-                height: 100%;
-                background: #B4B4B4;
-            }
 		}
         .ytp-time-display, #settings_button {
             background: $bg;
@@ -121,10 +136,13 @@
                 }
 			}
 			&:hover .arrow {
-				border-bottom-color: #be0000;
+				border-bottom-color: #be0000 !important;
 			}
-			&:hover:before {
-				color: #be0000
+            &.ytp-settings-button-active .arrow {
+                border-bottom-color: #be0000 !important;
+            }
+			&:hover:before,&.ytp-settings-button-active:before {
+				color: #be0000 !important;
 			}
         }
         #settings_button {
@@ -132,6 +150,9 @@
             padding-right: 20px;
             border-left: unset;
             border-right: 1px solid #B1B1B1;
+            &.ytp-settings-button-pressed{
+                
+            }
         }
         .ytp-button-watch-later:active {
             background: linear-gradient(#D0D0D0, #FCFCFC) !important;
